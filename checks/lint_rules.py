@@ -44,8 +44,10 @@ for m in re.finditer(r"<h[1-6][^>]*>(.*?)</h[1-6]>", text, flags=re.S):
     if re.search(r"<(em|i)\b(?![^>]*class=)", m.group(1)): fails.append("italic tag inside a heading: " + re.sub("<[^>]+>", "", m.group(1))[:50])
 
 # the page ships Part I and Part II together and removes the other part on load, so check each view
-for keep, drop in (("1", "2"), ("2", "1")):
-    view = re.sub(r'<(header|section)\b[^>]*data-page="%s"[^>]*>.*?</\1>' % drop, " ", text, flags=re.S)
+for keep in ("1", "2", "3"):
+    view = text
+    for drop in {"1", "2", "3"} - {keep}:
+        view = re.sub(r'<(header|section)\b[^>]*data-page="%s"[^>]*>.*?</\1>' % drop, " ", view, flags=re.S)
     ids = Counter(re.findall(r'\sid="([^"]+)"', view))
     dupes = [i for i, c in ids.items() if c > 1]
     if dupes: fails.append(f"duplicate ids on Part {keep}: " + ", ".join(dupes[:10]))

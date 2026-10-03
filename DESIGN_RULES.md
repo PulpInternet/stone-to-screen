@@ -41,7 +41,8 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 3. **Bar items never touch.** The bottom bar shows short part labels (Part I, Part II, Part III); full titles do not fit beside the middle button at any width.
 4. **Photos and figures start on the text's left edge.** Never center a figure narrower than the column.
 5. **No page-level sideways scroll.** Only the chapter strips scroll sideways, and nothing scrolls inside them.
-6. **Respect safe areas.** Fixed bars add `env(safe-area-inset-*)` to their own padding.
+6. **Every part has the same furniture:** chapter bar, scroll timeline, Index, New here bar, mode switch, and all three part links. `check_functional.py` asserts each one on every part.
+7. **Respect safe areas.** Fixed bars add `env(safe-area-inset-*)` to their own padding.
 
 ## Type
 
@@ -100,3 +101,5 @@ Each one closes a gap that let a real problem reach the live page:
 | Bottom bar labels ran into the middle button (v17) | Overlap check covered the top bar only | Every bottom-bar item is checked against every other, at nine widths |
 | Highlight swallowed the space before "spend" | No check measured the gap | Functional check measures it (at least 4 px) |
 | Layout checks passed while controls were broken | Checks measured boxes but never clicked anything | `check_functional.py` drives every control |
+| Part III had no chapter bar or timeline (v17 to v18) | Checks asserted furniture on Part I only | Functional check asserts the full navigation on all three parts |
+| A ring stayed on a control after a mouse click | Focus styles applied to mouse clicks too | Focus rings show for keyboard only (`:focus-visible`) |
