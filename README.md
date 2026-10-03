@@ -21,7 +21,15 @@ The page is generated from the Part I source draft by these scripts, run in orde
 11. `build/enhance_v12.py` carries the research palette through every Part II chart: Damani cyan for measured results, Hannah green for efficiency and sustainability, gray for comparison series. Run it as `python3 enhance_v12.py v11.html v12.html`.
 12. `build/enhance_v13.py` makes Hannah green Part II's accent in place of electric yellow, starting on "spend" in the Next, Part II teaser at the end of Part I. Run it as `python3 enhance_v13.py v12.html v13.html`.
 13. `build/enhance_v14.py` makes Part II all Hannah green; Damani cyan stays only on water. Run it as `python3 enhance_v14.py v13.html v14.html`.
-14. `build/enhance_v15.py` adds a fresh-version check for GitHub Pages: on load the page fetches its own URL with a unique query (skipping the browser cache and GitHub's CDN), compares build ids, and reloads once onto a newer build. It does nothing off github.io. Run it as `python3 enhance_v15.py v14.html index.html`.
+14. `build/enhance_v15.py` adds a fresh-version check for GitHub Pages: on load the page fetches its own URL with a unique query (skipping the browser cache and GitHub's CDN), compares build ids, and reloads once onto a newer build. It does nothing off github.io. Run it last, on the final output: `python3 enhance_v15.py <input> index.html`.
+15. `build/enhance_v16.py` adds layout tokens (column, frame, gutter, spacing, tap size, z-index), keeps both fixed bars inside a 1180 px frame, and brings every control to a 44 px tap target. Run it as `python3 enhance_v16.py v15.html v16.html`, then `enhance_v15.py v16.html index.html`.
+
+## Rules
+
+`DESIGN_RULES.md` holds the CSS, layout, and data visualization rules every change follows. Before committing, run:
+
+- `python3 checks/lint_rules.py index.html` (static rules; must pass)
+- `python3 checks/check_layout.py index.html` (layout, overlap, alignment, tap targets, and behavior in a real browser)
 
 ## Seeing a new version
 
@@ -29,6 +37,6 @@ After a push, GitHub Pages takes about a minute to publish. Open the page normal
 
 The scripts use absolute paths from the environment they were written in; update the `SRC` and `OUT` paths at the top of each before running. Python 3 with Pillow is required.
 
-## Checks
+## Earlier checks
 
 `checks/check_v9.py` and `checks/check_v9r.py` run the page in a real browser with Playwright and verify the bubble states, hover previews, touch behavior, page links, navigation, and layout in all three color modes.
