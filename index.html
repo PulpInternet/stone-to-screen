@@ -684,7 +684,7 @@ html[data-page="1"] [data-page="2"], html[data-page="2"] [data-page="1"]{display
 <section class="coda" id="coda" data-page="1"><p class="pnum">Closing</p><h2>The newest memory</h2><p>Large language models are the newest answer to the oldest problem. They hold a compressed memory of much of what is on this page: tablets, scrolls, sutras, broadsheets, scripts, captions, and code. Like every medium before them, they have a cost. Each answer uses electricity in a data center, and the power plants behind it use water.</p><p>Every medium here was blamed for ruining something. Plato said writing would weaken memory. Scribes said print would cheapen the book. Radio would kill reading, and television would kill radio. None of them made people better or worse thinkers. Habits did.</p><p>AI does not care what you mean. People do. The job is the one the clerks in Uruk had: keep what matters, spend only what it takes, and keep honest books. The tools keep changing. The job never did.</p></section>
 <section class="nextpart" data-page="1" aria-labelledby="nph">
 <p class="pnum">Next, Part II</p>
-<h2 id="nph">What to keep, what to spend</h2>
+<h2 id="nph">What to keep, what to <span class="marker p2m">spend</span></h2>
 <p class="np-lede">Part I ends with machines that remember almost everything and spend energy every time they answer. Part II is Pulp's contribution: reading what people write and say with less memory, less compute, and more care.</p>
 <div class="np-grid">
 <div><h3>What to expect</h3><ul>
@@ -1308,4 +1308,13 @@ if (rf){ var l2 = document.createElement('p'); l2.className = 'vleg';
   l2.innerHTML = '<span><i style="background:var(--mut);opacity:.55"></i>Rules alone</span><span><i style="background:var(--sus)"></i>With the second layer</span>';
   rf.insertBefore(l2, rf.firstChild); }
 })();
-</script></body></html>
+</script><style>
+/* v13: Hannah green is Part II's accent */
+:root{--p2acc:#009E60}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]):not([data-pmode="light"]){--p2acc:#50C878} }
+:root[data-theme="dark"], :root[data-pmode="dark"], :root[data-pmode="mono"]{--p2acc:#50C878}
+:root[data-pmode="light"]{--p2acc:#009E60}
+:root[data-page="2"]{--yellow:var(--p2acc)}
+.marker.p2m::before{background:var(--p2acc)}
+.nextpart .marker{color:var(--ink)}
+</style></body></html>
