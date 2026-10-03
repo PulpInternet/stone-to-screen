@@ -20,7 +20,12 @@ The page is generated from the Part I source draft by these scripts, run in orde
 10. `build/enhance_v11.py` is the final review pass against the research files: water and electricity from `energy_stats_r11.json` (Hannah green for power, Damani cyan for water), corrected source and baseline claims, the 31 predictions in a modal, dataset credits, and the timeline label shown only on hover. Run it as `python3 enhance_v11.py v10.html v11.html <research/data/results>`.
 11. `build/enhance_v12.py` carries the research palette through every Part II chart: Damani cyan for measured results, Hannah green for efficiency and sustainability, gray for comparison series. Run it as `python3 enhance_v12.py v11.html v12.html`.
 12. `build/enhance_v13.py` makes Hannah green Part II's accent in place of electric yellow, starting on "spend" in the Next, Part II teaser at the end of Part I. Run it as `python3 enhance_v13.py v12.html v13.html`.
-13. `build/enhance_v14.py` makes Part II all Hannah green; Damani cyan stays only on water. Run it as `python3 enhance_v14.py v13.html index.html`.
+13. `build/enhance_v14.py` makes Part II all Hannah green; Damani cyan stays only on water. Run it as `python3 enhance_v14.py v13.html v14.html`.
+14. `build/enhance_v15.py` adds a fresh-version check for GitHub Pages: on load the page fetches its own URL with a unique query (skipping the browser cache and GitHub's CDN), compares build ids, and reloads once onto a newer build. It does nothing off github.io. Run it as `python3 enhance_v15.py v14.html index.html`.
+
+## Seeing a new version
+
+After a push, GitHub Pages takes about a minute to publish. Open the page normally; if it is stale, it reloads itself onto the new build within a second. You no longer need a hard refresh or a private window.
 
 The scripts use absolute paths from the environment they were written in; update the `SRC` and `OUT` paths at the top of each before running. Python 3 with Pillow is required.
 
