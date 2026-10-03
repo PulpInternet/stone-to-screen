@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><!--fresh--><meta name="build-id" content="36a56ec245f7"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><script id="freshcheck">(function(){if(!/github\.io$/.test(location.hostname)||!window.fetch)return;var mine=document.querySelector('meta[name="build-id"]').content;fetch(location.pathname+"?fresh="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():"";}).then(function(t){var m=t.match(/<meta name="build-id" content="([0-9a-f]+)"/);if(!m||m[1]===mine)return;var q=new URLSearchParams(location.search);if(q.get("v")===m[1])return;q.set("v",m[1]);location.replace(location.pathname+"?"+q.toString()+location.hash);}).catch(function(){});})();</script><!--/fresh--><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><script>document.documentElement.setAttribute("data-page", location.hash === "#part-iii" ? "3" : location.hash === "#part-ii" ? "2" : "1");</script>
+<!doctype html><html><head><meta charset=utf8><!--fresh--><meta name="build-id" content="b10452723c9f"><meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><script id="freshcheck">(function(){if(!/github\.io$/.test(location.hostname)||!window.fetch)return;var mine=document.querySelector('meta[name="build-id"]').content;fetch(location.pathname+"?fresh="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():"";}).then(function(t){var m=t.match(/<meta name="build-id" content="([0-9a-f]+)"/);if(!m||m[1]===mine)return;var q=new URLSearchParams(location.search);if(q.get("v")===m[1])return;q.set("v",m[1]);location.replace(location.pathname+"?"+q.toString()+location.hash);}).catch(function(){});})();</script><!--/fresh--><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><script>document.documentElement.setAttribute("data-page", location.hash === "#part-iii" ? "3" : location.hash === "#part-ii" ? "2" : "1");</script>
 <style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg,Canvas);color:var(--fg,CanvasText)}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><script>
 /* v10: quick, consistent jumps. 0.4 s ease-out; instant under reduced motion. */
 window.fastGo = function(el){
@@ -786,9 +786,9 @@ html[data-page="1"] [data-page]:not([data-page~="1"]):not(html), html[data-page=
 </div>
 </section>
 <footer>From Stone to Screen, with Part II by Pulp Corporation, Brooklyn, New York. Draft for review, October 2026.</footer>
-<div id="bbar"><a class="plink p1" href="#"><span class="pk">Part I</span><span class="pt">: From Stone to Screen</span></a><button id="bbtn" type="button" aria-haspopup="dialog">
+<div id="bbar"><button id="bbtn" type="button" aria-haspopup="dialog">
 <span class="lab">New here</span><span class="val"></span><span class="more" aria-hidden="true">+</span>
-</button><span class="pright"><a class="plink p2" href="#part-ii"><span class="pk">Part II</span><span class="pt">: What to keep, what to spend</span></a><a class="plink p3" href="#part-iii"><span class="pk">Part III</span><span class="pt">: Run the numbers</span></a></span></div>
+</button><span class="pright"><a class="plink p1" href="#"><span class="pk">Part I</span><span class="pt">: From Stone to Screen</span></a><a class="plink p2" href="#part-ii"><span class="pk">Part II</span><span class="pt">: What to keep, what to spend</span></a><a class="plink p3" href="#part-iii"><span class="pk">Part III</span><span class="pt">: Run the numbers</span></a></span></div>
 <script>
 (function(){
   var P2 = location.hash === '#part-ii'; window.__P2 = P2; var P3 = location.hash === '#part-iii'; window.__P3 = P3; var PG = P3 ? '3' : P2 ? '2' : '1';
@@ -1577,4 +1577,7 @@ calc();
     var nb = modes.querySelector('[data-m="' + next + '"]'); if (nb) nb.focus({preventScroll:true});
   }, true);
 })();
-</script></body></html>
+</script><style>
+/* v21: Part I joins Parts II and III; the links read as one group, in order */
+#bbar .pright .plink.p1, #bbar .pright .plink.p2{grid-column:auto; justify-self:auto}
+</style></body></html>

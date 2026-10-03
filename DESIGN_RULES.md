@@ -39,7 +39,8 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 
 1. **Two widths only:** `--col` for reading, `--frame` for bars. Fixed bars use `--frame-pad` on both sides so their contents never pin to the screen edge on wide displays.
 2. **The middle of each bar lines up with the reading column** within 2px on screens wider than 1100px. Narrower, the bar puts the part links first and the middle takes the remaining space.
-3. **Bar items never touch.** The bottom bar shows short part labels (Part I, Part II, Part III); full titles do not fit beside the middle button at any width.
+3. **The part links stay together, in order** (Part I, Part II, Part III) at the right of the bottom bar. Never split them across the bar.
+4. **Bar items never touch.** The bottom bar shows short part labels (Part I, Part II, Part III); full titles do not fit beside the middle button at any width.
 4. **Photos and figures start on the text's left edge.** Never center a figure narrower than the column.
 5. **No page-level sideways scroll.** Only the chapter strips scroll sideways, and nothing scrolls inside them.
 6. **Every part has the same furniture:** chapter bar, scroll timeline, Index, New here bar, mode switch, and all three part links. `check_functional.py` asserts each one on every part.

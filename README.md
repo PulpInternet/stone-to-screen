@@ -27,6 +27,7 @@ The page is generated from the Part I source draft by these scripts, run in orde
 17. `build/enhance_v18.py` is a consolidation pass: legacy raw colors and z-index values folded into tokens, the pre-script page hiding extended to three parts, the hero highlight spacing fixed, one hero text measure, and short part labels in the bottom bar. Run it as `python3 enhance_v18.py v17.html v18.html`, then `python3 enhance_v15.py v18.html index.html`.
 18. `build/enhance_v19.py` gives Part III the same navigation as Parts I and II: Chapters 15 to 17 in the chapter bar, scroll timeline, Index, and New here bar. Mouse clicks no longer leave a focus ring. Run it as `python3 enhance_v19.py v18.html v19.html`, then `python3 enhance_v15.py v19.html index.html`.
 19. `build/enhance_v20.py` adds reading focus (one lightly tinted section at a time, held through tall sections) and moves the Light, Dark, Mono switch to the top left as icons, one cycling button on phones. Run it as `python3 enhance_v20.py v19.html v20.html`, then `python3 enhance_v15.py v20.html index.html`.
+20. `build/enhance_v21.py` groups the three part links together, in order, at the right of the bottom bar. Run it as `python3 enhance_v21.py v20.html v21.html`, then `python3 enhance_v15.py v21.html index.html`.
 
 `enhance_v15.py` (the build id) always runs last, and is safe to run more than once.
 
