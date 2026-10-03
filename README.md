@@ -16,6 +16,7 @@ The page is generated from the Part I source draft by these scripts, run in orde
 6. `build/enhance_v7.py` adds the centered Antiquity to Today bar and the speech bubble.
 7. `build/enhance_v8.py` adds hover previews, collapse on leave, phone flashes, and the Part links.
 8. `build/enhance_v9.py` shows the speech bubble only while the bar is hovered, and slims the idle bar.
+9. `build/enhance_v10.py` speeds up jumps to about 0.4 s, aligns photos to the text column, quiets the scroll timeline (very low opacity, 1.5 s, full on hover), and redraws the energy chart with sustainability-green power and water pictograms. Run it as `python3 enhance_v10.py <v9 output> index.html`.
 
 The scripts use absolute paths from the environment they were written in; update the `SRC` and `OUT` paths at the top of each before running. Python 3 with Pillow is required.
 

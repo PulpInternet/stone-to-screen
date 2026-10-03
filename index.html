@@ -1,5 +1,30 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><script>document.documentElement.setAttribute("data-page", location.hash === "#part-ii" ? "2" : "1");</script>
-<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body><script>
+/* v10: quick, consistent jumps. 0.4 s ease-out; instant under reduced motion. */
+window.fastGo = function(el){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var strip = el.closest && el.closest('.strip');
+  if (strip) {
+    var sr = strip.getBoundingClientRect(), er = el.getBoundingClientRect();
+    strip.scrollLeft += (er.left + er.width / 2) - (sr.left + sr.width / 2);
+  }
+  var bar = document.getElementById('tbar');
+  var off = (bar ? bar.getBoundingClientRect().height : 0) + 20;
+  var anchor = strip ? strip.closest('.part') : el;
+  if (strip) { var h = anchor.querySelector('.phead'); if (h) anchor = h; }
+  var target = Math.max(0, anchor.getBoundingClientRect().top + window.scrollY - off);
+  if (reduced) { window.scrollTo(0, target); return; }
+  var start = window.scrollY, dist = target - start, t0 = null, dur = 400;
+  if (Math.abs(dist) < 2) return;
+  function step(ts){
+    if (t0 === null) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    window.scrollTo(0, start + dist * e);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+};
+</script>
 <title>From Stone to Screen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;800&family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap">
 <style>
@@ -696,7 +721,7 @@ html[data-page="1"] [data-page="2"], html[data-page="2"] [data-page="1"]{display
 <div class="chips" role="group" aria-label="Details"><button class="chip" data-ch="p2measure" data-f="0" type="button">Anchored scales</button><button class="chip" data-ch="p2measure" data-f="1" type="button">Empty, not zero</button><button class="chip" data-ch="p2measure" data-f="2" type="button">Where this research stands</button></div>
 </article><article class="beat card" id="p2energy" data-i="38">
 <header><p class="meta"><span class="date">2026</span><span class="sep" aria-hidden="true"></span><span>Per million requests</span></p><h3>Less compute, on the record</h3></header>
-<figure class="viz"><div class="vrow"><div class="vh"><span class="vn">A model reads everything<span class=vs>About 22 hours of an average US home&#x27;s electricity</span></span><span class="vv">26.6 kWh</span></div><div class="vbar" role="img" aria-label="A model reads everything: 26.6 kWh"><i class="" style="width:100.0%"></i></div></div><div class="vrow"><div class="vh"><span class="vn">Rules first, outside knowledge needed<span class=vs>About 13 hours</span></span><span class="vv">16.6 kWh</span></div><div class="vbar" role="img" aria-label="Rules first, outside knowledge needed: 16.6 kWh"><i class="" style="width:62.4%"></i></div></div><div class="vrow"><div class="vh"><span class="vn">Rules first, structure only<span class=vs>About 5 hours</span></span><span class="vv">6.3 kWh</span></div><div class="vbar" role="img" aria-label="Rules first, structure only: 6.3 kWh"><i class="" style="width:23.7%"></i></div></div><figcaption class="vcap">Electricity to understand one million requests with Claude Sonnet 5.5. An average US home uses about 29.6 kWh a day.</figcaption></figure>
+<figure class="viz eviz"><div class="ekey"><span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span> 1 hour of an average US home&#x27;s electricity</span><span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span> 5 liters of data-center cooling water</span></div><div class="erow"><div class="ehead"><span class="en">A model reads everything</span><span class="ev">26.6 kWh</span></div><div class="eline" role="img" aria-label="A model reads everything: 26.6 kWh, about 22 hours of an average US home's electricity"><span class="ek">Power</span><span class="pgs"><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt frac" style="--f:0.57"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span></span><span class="eq">22 h</span></div><div class="eline" role="img" aria-label="A model reads everything: about 48 liters of cooling water"><span class="ek">Water</span><span class="pgs"><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop frac" style="--f:0.58"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span></span><span class="eq">48 L</span></div></div><div class="erow"><div class="ehead"><span class="en">Rules first, outside knowledge needed</span><span class="ev">16.6 kWh</span></div><div class="eline" role="img" aria-label="Rules first, outside knowledge needed: 16.6 kWh, about 13 hours of an average US home's electricity"><span class="ek">Power</span><span class="pgs"><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt frac" style="--f:0.46"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span></span><span class="eq">13 h</span></div><div class="eline" role="img" aria-label="Rules first, outside knowledge needed: about 30 liters of cooling water"><span class="ek">Water</span><span class="pgs"><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop frac" style="--f:0.98"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span></span><span class="eq">30 L</span></div></div><div class="erow"><div class="ehead"><span class="en">Rules first, structure only</span><span class="ev">6.3 kWh</span></div><div class="eline" role="img" aria-label="Rules first, structure only: 6.3 kWh, about 5 hours of an average US home's electricity"><span class="ek">Power</span><span class="pgs"><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span><span class="pg bolt frac" style="--f:0.11"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M7 0 0 9h5l-1 7 8-10H7l1-6z"/></svg></span></span><span class="eq">5 h</span></div><div class="eline" role="img" aria-label="Rules first, structure only: about 11 liters of cooling water"><span class="ek">Water</span><span class="pgs"><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span><span class="pg drop frac" style="--f:0.27"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C6 0 0 7.2 0 10.4A6 5.6 0 0 0 12 10.4C12 7.2 6 0 6 0z"/></svg></span></span><span class="eq">11 L</span></div></div><figcaption class="vcap">Electricity to understand one million requests with Claude Sonnet 5.5. An average US home uses about 29.6 kWh a day. Water is estimated at 1.8 liters per kWh, the average on-site use reported for US data centers by Lawrence Berkeley National Laboratory (2016).</figcaption></figure>
 <p class="body">Every request a large model reads uses electricity in a data center, and that use grows with the amount of text the model reads and writes. Reading with rules first cuts the work.</p><p class="body">Averaged across six kinds of traffic, it saves about 40% of a model&#x27;s work when outside knowledge is needed and about 85% when only the structure of a request is. Across 2,000 different traffic mixes, those figures stayed between 38% and 42%, and between 78% and 90%.</p><p class="body">These figures are calculated from measured token counts and published energy research, not metered in a live deployment. They cover understanding a request, not writing the answer.</p>
 <div class="chips" role="group" aria-label="Details"><button class="chip" data-ch="p2energy" data-f="0" type="button">Where the model runs</button><button class="chip" data-ch="p2energy" data-f="1" type="button">A home for comparison</button><button class="chip" data-ch="p2energy" data-f="2" type="button">Every model we checked</button></div>
 </article></div></div><div class="snav"><button class="sbtn prev" type="button" aria-label="Previous">&#8592;</button><span class="shint">Scroll sideways</span><button class="sbtn next" type="button" aria-label="Next">&#8594;</button></div></section><section class="part vert" id="p2part13" data-page="2"><header class="phead"><p class="pnum">Chapter 13</p><h2>Making</h2><p class="epi">Tools that keep people in charge of what is kept and shared.</p></header><article class="beat" id="p2thinkwell" data-i="39">
@@ -851,7 +876,7 @@ addEventListener('resize', update);
 document.querySelectorAll('.strip').forEach(function(s){ s.addEventListener('scroll', update, {passive:true}); });
 setActive(0); update();
 function go(i){
-  beats[i].scrollIntoView({behavior:reduced?'auto':'smooth', block:'start', inline:'center'});
+  window.fastGo(beats[i]);
 }
 function trackPick(clientX){
   var r=track.getBoundingClientRect();
@@ -1035,7 +1060,7 @@ var _setActive = setActive; setActive = function(i){ _setActive(i); tocUpdate(i)
 tocUpdate(active < 0 ? 0 : active);
 /* the vertical timeline appears on scroll, hover, or focus, and fades after 5.5 s of stillness */
 var hideT = null, holding = false;
-function showV(){ vtl.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(function(){ if (!holding) vtl.classList.remove('show'); }, 5500); }
+function showV(){ vtl.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(function(){ if (!holding) vtl.classList.remove('show'); }, 1500); }
 addEventListener('scroll', showV, {passive: true});
 document.querySelectorAll('.strip').forEach(function(s){ s.addEventListener('scroll', showV, {passive: true}); });
 vtl.addEventListener('pointerenter', function(){ holding = true; vtl.classList.add('show'); });
@@ -1139,4 +1164,51 @@ document.querySelectorAll('.plink').forEach(function(a){
 });
 })();
 </script>
-</body></html>
+<style>
+/* v10 */
+html{scroll-behavior:auto}
+/* photos share the text column's left edge */
+figure img{margin-inline:0; width:min(100%, calc(49.3vh * var(--w) / var(--h)))}
+.card figure img{width:min(100%, calc(25.5vh * var(--w) / var(--h)))}
+/* scroll timeline: clear of the column, quiet while you read */
+#vtl.show{opacity:.14}
+#vtl.show:hover, #vtl.show:focus-within, #vtl:hover{opacity:1}
+@media (min-width:860px){ #vtl{left:max(2px, calc((100vw - 680px) / 2 - 116px))} }
+@media (prefers-reduced-motion:reduce){ #vtl{transition:opacity .12s ease} }
+/* top bar: chapter icons centered, counter and Index on the same right edge as the bottom bar */
+@media (min-width:1100px){
+  #tbar{padding-inline:16px}
+  #tbar .inner{max-width:none; display:grid; grid-template-columns:1fr auto 1fr; align-items:center}
+  #tbar .tocwrap{grid-column:2}
+  #tbar .tocright{grid-column:3; justify-self:end}
+}
+/* even rhythm between moments and chapters */
+.part{padding-block:48px 40px}
+.part.vert .beat{padding-block:32px 32px}
+.phead{margin-bottom:8px}
+.beat header{margin-bottom:14px}
+figure{margin:18px 0}
+/* energy chart: sustainability green, electricity and water pictograms */
+:root{--sus:#009E60; --sus2:#50C878}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]):not([data-pmode="light"]){--sus:#50C878; --sus2:#3FB37F} }
+:root[data-theme="dark"], :root[data-pmode="dark"]{--sus:#50C878; --sus2:#3FB37F}
+:root[data-pmode="light"]{--sus:#009E60; --sus2:#50C878}
+:root[data-pmode="mono"]{--sus:#C9C9C5; --sus2:#8E8E8A}
+.eviz{padding:16px 0 12px}
+.ekey{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.76rem; color:var(--mut); margin-bottom:10px}
+.ekey > span{display:inline-flex; align-items:center; gap:6px}
+.erow{padding:10px 0; border-top:1px solid var(--line)}
+.erow:first-of-type{border-top:0}
+.ehead{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; font-size:.86rem; margin-bottom:6px}
+.ehead .ev{font-weight:600; font-variant-numeric:tabular-nums}
+.eline{display:grid; grid-template-columns:44px minmax(0,1fr) 40px; align-items:center; gap:8px; min-height:22px}
+.ek{font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; color:var(--mut); font-weight:600}
+.eq{font-size:.76rem; color:var(--mut); text-align:right; font-variant-numeric:tabular-nums}
+.pgs{display:flex; flex-wrap:wrap; gap:2px; min-width:0}
+.pg{display:inline-block; width:11px; height:15px; line-height:0}
+.pg svg{width:100%; height:100%; display:block}
+.pg.bolt svg{fill:var(--sus)}
+.pg.drop svg{fill:var(--sus2)}
+.pg.frac{clip-path:inset(0 calc((1 - var(--f)) * 100%) 0 0)}
+@media (forced-colors:active){ .pg svg{fill:CanvasText} }
+</style></body></html>
