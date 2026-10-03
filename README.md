@@ -16,7 +16,8 @@ The page is generated from the Part I source draft by these scripts, run in orde
 6. `build/enhance_v7.py` adds the centered Antiquity to Today bar and the speech bubble.
 7. `build/enhance_v8.py` adds hover previews, collapse on leave, phone flashes, and the Part links.
 8. `build/enhance_v9.py` shows the speech bubble only while the bar is hovered, and slims the idle bar.
-9. `build/enhance_v10.py` speeds up jumps to about 0.4 s, aligns photos to the text column, quiets the scroll timeline (very low opacity, 1.5 s, full on hover), and redraws the energy chart with sustainability-green power and water pictograms. Run it as `python3 enhance_v10.py <v9 output> index.html`.
+9. `build/enhance_v10.py` speeds up jumps to about 0.4 s, aligns photos to the text column, quiets the scroll timeline (very low opacity, 1.5 s, full on hover), and redraws the energy chart with sustainability-green power and water pictograms. Run it as `python3 enhance_v10.py <v9 output> v10.html`.
+10. `build/enhance_v11.py` is the final review pass against the research files: water and electricity from `energy_stats_r11.json` (Hannah green for power, Damani cyan for water), corrected source and baseline claims, the 31 predictions in a modal, dataset credits, and the timeline label shown only on hover. Run it as `python3 enhance_v11.py v10.html index.html <research/data/results>`.
 
 The scripts use absolute paths from the environment they were written in; update the `SRC` and `OUT` paths at the top of each before running. Python 3 with Pillow is required.
 
