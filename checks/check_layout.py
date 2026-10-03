@@ -7,6 +7,8 @@ CHK="""()=>{const iss=[];const d=document.documentElement;
  for(const f of document.querySelectorAll('figure')){const img=f.querySelector('img'); if(!img) continue; const art=f.closest('article'); const h=art&&art.querySelector('h3'); if(!h) continue;
    const ir=img.getBoundingClientRect(), hr=h.getBoundingClientRect(); if(ir.width>0 && Math.abs(ir.left-hr.left)>1) iss.push('img misaligned '+art.id+' '+Math.round(ir.left-hr.left));}
  const ve=document.getElementById('vtl'), v=ve?ve.getBoundingClientRect():null, m=document.querySelector('main').getBoundingClientRect(); if(v && innerWidth>=860 && v.right>m.left-24) iss.push('vtl close '+Math.round(m.left-v.right));
+ const bk=[...document.querySelectorAll('#bbar .plink, #bbtn')].map(e=>e.getBoundingClientRect()).filter(r=>r.width>0);
+ for(let i=0;i<bk.length;i++)for(let j=i+1;j<bk.length;j++) if(inter(bk[i],bk[j])) iss.push('bottom bar items overlap');
  const kids=[...document.querySelectorAll('#tbar .tocwrap, #tbar .tocright')].map(e=>e.getBoundingClientRect()).filter(r=>r.width>0); if(kids.length==2&&inter(kids[0],kids[1])) iss.push('tbar overlap');
  for(const r of document.querySelectorAll('.eline')){const a=[...r.children].map(e=>e.getBoundingClientRect()).filter(x=>x.width>0); for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++) if(inter(a[i],a[j])) iss.push('eline overlap');}
  const bb=document.getElementById('bbtn'), mn=document.querySelector('main');
@@ -19,7 +21,7 @@ CHK="""()=>{const iss=[];const d=document.documentElement;
 async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(); out={}; errs=[]
-    for name,w,h in [("phone",390,844),("phone-land",844,390),("tablet",834,1112),("tablet-land",1112,834),("desktop",1440,900),("wide",2000,1068)]:
+    for name,w,h in [("small",320,640),("phone",390,844),("phone-land",844,390),("tablet",834,1112),("tablet-land",1112,834),("laptop",1280,800),("desktop",1440,900),("wide",2000,1068),("xwide",2560,1440)]:
       for hsh in ["","#part-ii","#part-iii"]:
         pg=await b.new_page(viewport={"width":w,"height":h}); pg.on("pageerror",lambda e:errs.append(str(e)))
         await pg.goto(PAGE+hsh, wait_until="domcontentloaded"); await pg.wait_for_timeout(500)

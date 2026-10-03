@@ -38,9 +38,10 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 
 1. **Two widths only:** `--col` for reading, `--frame` for bars. Fixed bars use `--frame-pad` on both sides so their contents never pin to the screen edge on wide displays.
 2. **The middle of each bar lines up with the reading column** within 2px on screens wider than 1100px. Narrower, the bar puts the part links first and the middle takes the remaining space.
-3. **Photos and figures start on the text's left edge.** Never center a figure narrower than the column.
-4. **No page-level sideways scroll.** Only the chapter strips scroll sideways, and nothing scrolls inside them.
-5. **Respect safe areas.** Fixed bars add `env(safe-area-inset-*)` to their own padding.
+3. **Bar items never touch.** The bottom bar shows short part labels (Part I, Part II, Part III); full titles do not fit beside the middle button at any width.
+4. **Photos and figures start on the text's left edge.** Never center a figure narrower than the column.
+5. **No page-level sideways scroll.** Only the chapter strips scroll sideways, and nothing scrolls inside them.
+6. **Respect safe areas.** Fixed bars add `env(safe-area-inset-*)` to their own padding.
 
 ## Type
 
@@ -77,6 +78,25 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 
 ## Before every commit
 
-1. `python3 checks/lint_rules.py index.html` passes.
-2. `python3 checks/check_layout.py index.html` reports no issues and no script errors.
-3. Run `build/enhance_v15.py` last, so the build id that keeps visitors on the newest version matches the file.
+1. `python3 checks/lint_rules.py index.html` passes with 0 failures and 0 legacy warnings.
+2. `python3 checks/check_layout.py index.html` reports no issues at all nine widths (320 to 2560) and no script errors.
+3. `python3 checks/check_functional.py index.html` passes. It clicks and types through every control on desktop and phone: chapter bar, chapter list, index, chips, New here, strip arrows, mode switch and its persistence, all three part links, the predictions modal, the water chip, and every estimator input.
+4. Run `build/enhance_v15.py` last. It is safe to run more than once; the linter fails if the head ever has more or fewer than one viewport tag, page-routing script, fresh-version script, or build id.
+
+## After every push
+
+1. Wait about a minute, then open the live page. Its build id (`<meta name="build-id">`) must match the one in your local `index.html`.
+2. Run `python3 checks/check_functional.py https://pulpinternet.github.io/stone-to-screen/` from a machine with Playwright, or click through Part I, Part II, and Part III by hand on a phone and a desktop.
+3. A push is not done until the live page passes. Checking only the local file is how a broken head shipped in v16.
+
+## Why these checks exist
+
+Each one closes a gap that let a real problem reach the live page:
+
+| Problem that shipped | Gap | Check now |
+|---|---|---|
+| Viewport tag and page routing deleted (v16) | The build-id step was not safe to rerun, and nothing checked the head | Idempotent build-id step; head-integrity rule in the linter |
+| Part II showed yellow instead of green (v16) | Checks never asserted which accent each part shows | Functional check reads the highlight color on each part |
+| Bottom bar labels ran into the middle button (v17) | Overlap check covered the top bar only | Every bottom-bar item is checked against every other, at nine widths |
+| Highlight swallowed the space before "spend" | No check measured the gap | Functional check measures it (at least 4 px) |
+| Layout checks passed while controls were broken | Checks measured boxes but never clicked anything | `check_functional.py` drives every control |

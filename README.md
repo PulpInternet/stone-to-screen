@@ -23,7 +23,8 @@ The page is generated from the Part I source draft by these scripts, run in orde
 13. `build/enhance_v14.py` makes Part II all Hannah green; Damani cyan stays only on water. Run it as `python3 enhance_v14.py v13.html v14.html`.
 14. `build/enhance_v15.py` adds a fresh-version check for GitHub Pages: on load the page fetches its own URL with a unique query (skipping the browser cache and GitHub's CDN), compares build ids, and reloads once onto a newer build. It does nothing off github.io. Run it last, on the final output: `python3 enhance_v15.py <input> index.html`.
 15. `build/enhance_v16.py` adds layout tokens (column, frame, gutter, spacing, tap size, z-index), keeps both fixed bars inside a 1180 px frame, and brings every control to a 44 px tap target. Run it as `python3 enhance_v16.py v15.html v16.html`.
-16. `build/enhance_v17.py` adds Part III, Run the numbers, at `index.html#part-iii`: the estimator from the first research page, rebuilt on public data only. Visitors set a traffic mix across the six kinds of requests, a yearly volume, model, reasoning mode, and grid, and see provider spend (at provider list prices), share of model work, electricity with its 80% range, carbon, and water saved. Every input figure is read from `research/data/results`; nothing comes from `research/internal`. Run it as `python3 enhance_v17.py v16.html v17.html <research/data/results>`, then `python3 enhance_v15.py v17.html index.html`.
+16. `build/enhance_v17.py` adds Part III, Run the numbers, at `index.html#part-iii`: the estimator from the first research page, rebuilt on public data only. Visitors set a traffic mix across the six kinds of requests, a yearly volume, model, reasoning mode, and grid, and see provider spend (at provider list prices), share of model work, electricity with its 80% range, carbon, and water saved. Every input figure is read from `research/data/results`; nothing comes from `research/internal`. Run it as `python3 enhance_v17.py v16.html v17.html <research/data/results>`.
+17. `build/enhance_v18.py` is a consolidation pass: legacy raw colors and z-index values folded into tokens, the pre-script page hiding extended to three parts, the hero highlight spacing fixed, one hero text measure, and short part labels in the bottom bar. Run it as `python3 enhance_v18.py v17.html v18.html`, then `python3 enhance_v15.py v18.html index.html`.
 
 `enhance_v15.py` (the build id) always runs last, and is safe to run more than once.
 
@@ -32,7 +33,10 @@ The page is generated from the Part I source draft by these scripts, run in orde
 `DESIGN_RULES.md` holds the CSS, layout, and data visualization rules every change follows. Before committing, run:
 
 - `python3 checks/lint_rules.py index.html` (static rules; must pass)
-- `python3 checks/check_layout.py index.html` (layout, overlap, alignment, tap targets, and behavior in a real browser)
+- `python3 checks/check_layout.py index.html` (layout, overlap, alignment, tap targets at nine widths)
+- `python3 checks/check_functional.py index.html` (clicks and types through every control on desktop and phone)
+
+After pushing, confirm the live page's build id matches local and run `check_functional.py` against the live URL. See DESIGN_RULES.md.
 
 ## Seeing a new version
 

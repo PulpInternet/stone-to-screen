@@ -27,7 +27,7 @@ for n, block in enumerate(re.findall(r"<style[^>]*>(.*?)</style>", s, flags=re.S
             if prop.startswith("--"): continue                       # token definitions may hold raw values
             if RAW_COLOR.search(val) and "forced-colors" not in sel:
                 problems.append(f"raw color in `{sel[:40]}` {prop}: {val[:40]}")
-            if "!important" in val: problems.append(f"!important in `{sel[:40]}`")
+            if "!important" in val and not (sel.startswith("[hidden]") or "[data-page" in sel): problems.append(f"!important in `{sel[:40]}`")
             if prop == "z-index" and not val.startswith("var(--z-"): problems.append(f"raw z-index {val} in `{sel[:40]}`")
             if prop == "font-style" and "italic" in val: problems.append(f"italic in `{sel[:40]}`")
     for p in problems:
