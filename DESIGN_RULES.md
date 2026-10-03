@@ -19,12 +19,13 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 | `--frame-pad` | computed | Side padding for full-width bars: the gutter, or whatever centers the frame. |
 | `--s1` to `--s7` | 4, 8, 12, 16, 24, 32, 48px | Spacing scale. Use `gap` on flex and grid, not margins between siblings. |
 | `--tap` | 44px | Minimum height and width of anything you can tap or click. |
-| `--z-rail`, `--z-bar`, `--z-modal` | 45, 50, 80 | The only z-index values. |
+| `--z-rail`, `--z-bar`, `--z-float`, `--z-modal` | 45, 50, 55, 80 | The only z-index values. |
 | `--bg`, `--fg`, `--mut`, `--line`, `--card`, `--band` | per mode | Ground, text, secondary text, rules, raised surfaces, bands. |
 | `--btn-bg`, `--btn-fg`, `--link` | per mode | Primary buttons and links. |
 | `--yellow` | electric yellow | Part I accent. On Part II it resolves to Hannah green. |
 | `--p2acc`, `--sus` | Hannah green | Part II accent and all Part II data. |
 | `--aqua`, `--aqua-edge` | Damani cyan | Water only. |
+| `--focus-bg` | 4% text color over the ground | Tint on the one section in reading focus. |
 
 ## Color
 
@@ -57,7 +58,9 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 2. **Hover-only information must have a non-hover path.** Labels that appear on hover (like the timeline label) also appear on keyboard focus.
 3. **Secondary views open as floating modals** over a dimmed page, close on outside click, the close button, and Escape, and return focus to the control that opened them.
 4. **Jumps take about 0.4s** and land below the top bar. Reduced motion makes them instant and removes movement, keeping opacity fades at 0.12s.
-5. **The scroll timeline stays quiet:** very low opacity while scrolling, gone 1.5s after, full only on hover or focus. Its label never covers the reading column.
+5. **Reading focus:** exactly one section (the one crossing 42% of the screen height) gets the `--focus-bg` tint, edge to edge. A tall section keeps it until the next section reaches that line; gaps never clear it.
+6. **The color mode switch** is three labeled icons (sun, moon, half circle) fixed in the top left. Under 860px it is one button that cycles light, dark, mono.
+7. **The scroll timeline stays quiet:** very low opacity while scrolling, gone 1.5s after, full only on hover or focus. Its label never covers the reading column.
 
 ## Data visualizations
 

@@ -26,6 +26,18 @@ async def fresh(b, w, h, hsh="", scheme="light"):
 async def opened_modal(pg):
     return await pg.evaluate("!!document.getElementById('overlay') && !!document.getElementById('modal')")
 
+async def set_mode(pg, w, m):
+    # desktop: click the icon; phone: the single button cycles light, dark, mono
+    if w >= 860:
+        await pg.click(f"#modes button[data-m={m}]"); return
+    for _ in range(4):
+        if await pg.evaluate("document.documentElement.getAttribute('data-pmode')") == m: return
+        await pg.click("#modes button:visible")
+
+async def unset_mode(pg, w, m):
+    if w >= 860: await pg.click(f"#modes button[data-m={m}]")
+    else: await pg.evaluate("localStorage.removeItem('pmode'); document.documentElement.removeAttribute('data-pmode'); document.querySelectorAll('#modes button').forEach(b=>b.setAttribute('aria-pressed','false'))")
+
 async def run(b, w, h, tag):
     # ---------- Part I ----------
     ctx, pg, errs = await fresh(b, w, h)
@@ -37,12 +49,25 @@ async def run(b, w, h, tag):
     gap = await pg.evaluate("""(()=>{const m=document.querySelector('#hero .marker'); const r=document.createRange(); const t=m.previousSibling; r.setStart(t, Math.max(0,t.length-2)); r.setEnd(t, t.length-1); return Math.round(m.getBoundingClientRect().left - r.getBoundingClientRect().right)})()""")
     ok(gap >= 4, f"{tag} P1: space between the word before the highlight and the highlight ({gap}px)")
     # mode switch persists
-    await pg.click("#modes button[data-m=dark]")
+    box = await pg.evaluate("(()=>{const r=document.getElementById('modes').getBoundingClientRect(); return [r.left, r.top]})()")
+    ok(box[0] < w*0.16 and box[1] < 40, f"{tag} mode switch sits in the top left ({box})")
+    ok(await pg.evaluate("[...document.querySelectorAll('#modes button')].every(b=>b.querySelector('svg') && b.getAttribute('aria-label'))"), f"{tag} mode switch uses labeled icons")
+    await set_mode(pg, w, "dark")
     ok(await pg.evaluate("document.documentElement.getAttribute('data-pmode')") == "dark", f"{tag} mode: dark applies")
     await pg.reload(wait_until="domcontentloaded"); await pg.wait_for_timeout(400)
     ok(await pg.evaluate("document.documentElement.getAttribute('data-pmode')") == "dark", f"{tag} mode: dark persists after reload")
-    await pg.click("#modes button[data-m=dark]")
+    await unset_mode(pg, w, "dark")
     ok(await pg.evaluate("document.documentElement.getAttribute('data-pmode')") is None, f"{tag} mode: clicking again returns to system")
+    # reading focus: exactly one tinted section, held through tall sections
+    await pg.evaluate("(()=>{const e=document.getElementById('part3'); scrollTo(0, e.offsetTop - innerHeight*0.3)})()"); await pg.wait_for_timeout(300)
+    mains = await pg.evaluate("[...document.querySelectorAll('.is-main')].map(e=>e.id)")
+    ok(mains == ["part3"], f"{tag} focus: one main section, part3 ({mains})")
+    await pg.evaluate("(()=>{const e=document.getElementById('part3'); scrollTo(0, e.offsetTop + e.offsetHeight - innerHeight*0.5)})()"); await pg.wait_for_timeout(300)
+    mains = await pg.evaluate("[...document.querySelectorAll('.is-main')].map(e=>e.id)")
+    ok(mains == ["part3"], f"{tag} focus: holds while the section still covers the reading line ({mains})")
+    bg = await pg.evaluate("getComputedStyle(document.getElementById('part3')).backgroundColor")
+    ok(bg != await pg.evaluate("getComputedStyle(document.body).backgroundColor"), f"{tag} focus: main section is tinted ({bg})")
+    await pg.evaluate("scrollTo(0,0)"); await pg.wait_for_timeout(200)
     # chapter bar or mini list
     if w >= 860:
         await pg.evaluate("document.querySelectorAll('#toc button')[4].click()"); await pg.wait_for_timeout(700)
@@ -122,9 +147,9 @@ async def run(b, w, h, tag):
     await pg.evaluate("const s=document.getElementById('mx0'); s.value=100; s.dispatchEvent(new Event('input'))"); await pg.wait_for_timeout(150)
     shares = await pg.evaluate("[...document.querySelectorAll('.mxv')].map(o=>parseInt(o.textContent))")
     ok(abs(sum(shares) - 100) <= 3, f"{tag} P3: mix shares add to about 100 ({shares})")
-    await pg.click("#modes button[data-m=mono]")
+    await set_mode(pg, w, "mono")
     ok(await pg.evaluate("document.documentElement.getAttribute('data-pmode')") == "mono", f"{tag} P3: mode switch works")
-    await pg.click("#modes button[data-m=mono]")
+    await unset_mode(pg, w, "mono")
     await pg.click(".plink.p1"); await pg.wait_for_timeout(900)
     ok(await pg.evaluate("document.documentElement.getAttribute('data-page')") == "1", f"{tag} Part I link from Part III")
     ok(errs == [], f"{tag} P3: no script errors {errs[:2]}")
