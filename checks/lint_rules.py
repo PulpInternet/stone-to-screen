@@ -62,6 +62,12 @@ for fig in re.findall(r'<figure class="viz[^"]*">(.*?)</figure>', text, flags=re
 if re.search(r"\.drop|--aqua", s) and re.search(r'\[data-page="2"\][^{]*\{[^}]*background:var\(--aqua\)', s.split("/* v14")[-1]):
     fails.append("cyan used for something other than water after v14")
 
+# ---------- head integrity (the build-id step once ate the viewport and page scripts) ----------
+for needle, name in (('<meta name=viewport', "viewport meta"), ('data-page", location', "page-routing script"),
+                     ('id="freshcheck"', "fresh-version script"), (re.compile(r'<meta name="build-id" content="[0-9a-f]+">'), "build id")):
+    c = len(needle.findall(src)) if hasattr(needle, "findall") else src.count(needle)
+    if c != 1: fails.append(f"{name} appears {c} times in the head, expected 1")
+
 # ---------- content ----------
 for bad in ("icp_roi", "pure_per_M_usd", "Never show Pulp"):
     if bad in s: fails.append(f"internal research content on the page: {bad}")

@@ -37,7 +37,7 @@ These rules apply to every change to `index.html`, whether it comes from a perso
 ## Layout and spacing
 
 1. **Two widths only:** `--col` for reading, `--frame` for bars. Fixed bars use `--frame-pad` on both sides so their contents never pin to the screen edge on wide displays.
-2. **The middle of each bar lines up with the reading column** within 2px at every width.
+2. **The middle of each bar lines up with the reading column** within 2px on screens wider than 1100px. Narrower, the bar puts the part links first and the middle takes the remaining space.
 3. **Photos and figures start on the text's left edge.** Never center a figure narrower than the column.
 4. **No page-level sideways scroll.** Only the chapter strips scroll sideways, and nothing scrolls inside them.
 5. **Respect safe areas.** Fixed bars add `env(safe-area-inset-*)` to their own padding.

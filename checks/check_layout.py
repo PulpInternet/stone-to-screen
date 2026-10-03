@@ -6,11 +6,11 @@ CHK="""()=>{const iss=[];const d=document.documentElement;
  function inter(a,b){return !(a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top);}
  for(const f of document.querySelectorAll('figure')){const img=f.querySelector('img'); if(!img) continue; const art=f.closest('article'); const h=art&&art.querySelector('h3'); if(!h) continue;
    const ir=img.getBoundingClientRect(), hr=h.getBoundingClientRect(); if(ir.width>0 && Math.abs(ir.left-hr.left)>1) iss.push('img misaligned '+art.id+' '+Math.round(ir.left-hr.left));}
- const v=document.getElementById('vtl').getBoundingClientRect(), m=document.querySelector('main').getBoundingClientRect(); if(innerWidth>=860 && v.right>m.left-24) iss.push('vtl close '+Math.round(m.left-v.right));
+ const ve=document.getElementById('vtl'), v=ve?ve.getBoundingClientRect():null, m=document.querySelector('main').getBoundingClientRect(); if(v && innerWidth>=860 && v.right>m.left-24) iss.push('vtl close '+Math.round(m.left-v.right));
  const kids=[...document.querySelectorAll('#tbar .tocwrap, #tbar .tocright')].map(e=>e.getBoundingClientRect()).filter(r=>r.width>0); if(kids.length==2&&inter(kids[0],kids[1])) iss.push('tbar overlap');
  for(const r of document.querySelectorAll('.eline')){const a=[...r.children].map(e=>e.getBoundingClientRect()).filter(x=>x.width>0); for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++) if(inter(a[i],a[j])) iss.push('eline overlap');}
  const bb=document.getElementById('bbtn'), mn=document.querySelector('main');
- if(bb&&mn&&innerWidth>560){const a=bb.getBoundingClientRect(), c=mn.getBoundingClientRect(); if(Math.abs(a.left-c.left)>3) iss.push('bottom bar off column '+Math.round(a.left-c.left));}
+ if(bb&&mn&&innerWidth>1100&&bb.getBoundingClientRect().width){const a=bb.getBoundingClientRect(), c=mn.getBoundingClientRect(); if(Math.abs(a.left-c.left)>3) iss.push('bottom bar off column '+Math.round(a.left-c.left));}
  for(const el of document.querySelectorAll('#bbar a,#bbtn,#tbar button,#modes button,#jump,.chip,.sbtn,.predbtn')){const r=el.getBoundingClientRect(); if(!r.width) continue;
    const af=getComputedStyle(el,'::after'); const ok=r.height>=43.5 || (af.content!=='none' && el.classList.contains('chip'));
    if(!ok) iss.push('tap target '+Math.round(r.height)+'px: '+(el.id||el.className||el.tagName));}
@@ -20,7 +20,7 @@ async def main():
   async with async_playwright() as p:
     b=await p.chromium.launch(); out={}; errs=[]
     for name,w,h in [("phone",390,844),("phone-land",844,390),("tablet",834,1112),("tablet-land",1112,834),("desktop",1440,900),("wide",2000,1068)]:
-      for hsh in ["","#part-ii"]:
+      for hsh in ["","#part-ii","#part-iii"]:
         pg=await b.new_page(viewport={"width":w,"height":h}); pg.on("pageerror",lambda e:errs.append(str(e)))
         await pg.goto(PAGE+hsh, wait_until="domcontentloaded"); await pg.wait_for_timeout(500)
         iss=await pg.evaluate(CHK)

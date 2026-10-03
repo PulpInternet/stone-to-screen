@@ -6,10 +6,11 @@
 import sys, hashlib, re
 SRC, OUT = sys.argv[1], sys.argv[2]
 s = open(SRC, encoding="utf-8").read()
-s = re.sub(r'<meta name="build-id"[^>]*>', '', s)
-s = re.sub(r'<script id="freshcheck">.*?</script>', '', s, flags=re.S)
+# idempotent: remove an earlier copy of this block before adding the new one
+s = re.sub(r'<!--fresh-->.*?<!--/fresh-->', '', s, flags=re.S)
+s = re.sub(r'<meta name="build-id" content="[0-9a-f]+">.*?<script id="freshcheck">.*?</script>', '', s, count=1, flags=re.S)
 BUILD = hashlib.sha256(s.encode("utf-8")).hexdigest()[:12]
-HEAD = ('<meta name="build-id" content="%s">'
+HEAD = ('<!--fresh--><meta name="build-id" content="%s">'
         '<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">'
         '<meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">'
         '<script id="freshcheck">(function(){'
@@ -20,7 +21,7 @@ HEAD = ('<meta name="build-id" content="%s">'
         'if(!m||m[1]===mine)return;'
         'var q=new URLSearchParams(location.search);if(q.get("v")===m[1])return;'
         'q.set("v",m[1]);location.replace(location.pathname+"?"+q.toString()+location.hash);'
-        '}).catch(function(){});})();</script>') % BUILD
+        '}).catch(function(){});})();</script><!--/fresh-->') % BUILD
 s = s.replace('<meta charset=utf8>', '<meta charset=utf8>' + HEAD, 1) if '<meta charset=utf8>' in s else re.sub(r'(<head[^>]*>)', lambda m: m.group(1) + HEAD, s, count=1)
 open(OUT, "w", encoding="utf-8").write(s)
 print("wrote", OUT, "build", BUILD)

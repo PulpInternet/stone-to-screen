@@ -22,7 +22,10 @@ The page is generated from the Part I source draft by these scripts, run in orde
 12. `build/enhance_v13.py` makes Hannah green Part II's accent in place of electric yellow, starting on "spend" in the Next, Part II teaser at the end of Part I. Run it as `python3 enhance_v13.py v12.html v13.html`.
 13. `build/enhance_v14.py` makes Part II all Hannah green; Damani cyan stays only on water. Run it as `python3 enhance_v14.py v13.html v14.html`.
 14. `build/enhance_v15.py` adds a fresh-version check for GitHub Pages: on load the page fetches its own URL with a unique query (skipping the browser cache and GitHub's CDN), compares build ids, and reloads once onto a newer build. It does nothing off github.io. Run it last, on the final output: `python3 enhance_v15.py <input> index.html`.
-15. `build/enhance_v16.py` adds layout tokens (column, frame, gutter, spacing, tap size, z-index), keeps both fixed bars inside a 1180 px frame, and brings every control to a 44 px tap target. Run it as `python3 enhance_v16.py v15.html v16.html`, then `enhance_v15.py v16.html index.html`.
+15. `build/enhance_v16.py` adds layout tokens (column, frame, gutter, spacing, tap size, z-index), keeps both fixed bars inside a 1180 px frame, and brings every control to a 44 px tap target. Run it as `python3 enhance_v16.py v15.html v16.html`.
+16. `build/enhance_v17.py` adds Part III, Run the numbers, at `index.html#part-iii`: the estimator from the first research page, rebuilt on public data only. Visitors set a traffic mix across the six kinds of requests, a yearly volume, model, reasoning mode, and grid, and see provider spend (at provider list prices), share of model work, electricity with its 80% range, carbon, and water saved. Every input figure is read from `research/data/results`; nothing comes from `research/internal`. Run it as `python3 enhance_v17.py v16.html v17.html <research/data/results>`, then `python3 enhance_v15.py v17.html index.html`.
+
+`enhance_v15.py` (the build id) always runs last, and is safe to run more than once.
 
 ## Rules
 
